@@ -1,0 +1,11 @@
+{
+	"luci-app-mikhmonv3": {
+		"description": "Grant UCI access for luci-app-mikhmonv3",
+		"read": {
+			"uci": [ "luci-app-mikhmonv3" ]
+		},
+		"write": {
+			"uci": [ "luci-app-mikhmonv3" ]
+		}
+	}
+}

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+[ -e /www/mikhmonv3 ] && rm -rf /www/mikhmonv3; ln -s /usr/share/mikhmonv3 /www/mikhmonv3

@@ -1,0 +1,13 @@
+{
+	"admin/tools/mikhmonv3": {
+		"title": "Mikhmon V3",
+		"order": 30,
+		"action": {
+			"type": "template",
+			"path": "mikhmonv3"
+		},
+		"depends": {
+			"acl": [ "luci-app-mikhmonv3" ]
+		}
+	}
+}
