@@ -27,7 +27,7 @@ jobs:
           sudo -E apt-get clean > /dev/null 2>&1
           
           echo -e "\033[34m🔧 Configuring environment \033[0m"
-          PKG_NAME=luci-app-huawei-hilink
+          PKG_NAME=luci-app-mikhmonv3
           PKG_VERSION=$(grep 'PKG_VERSION:=' $PKG_NAME/Makefile | awk -F '=' '{print $2}' | tr -d ' ')
           export TERM=xterm
           echo "PKG_VERSION=$PKG_VERSION" >> $GITHUB_ENV
