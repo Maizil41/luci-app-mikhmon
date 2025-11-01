@@ -1,5 +1,5 @@
 {
-	"admin/tools/mikhmonv4": {
+	"admin/services/mikhmonv4": {
 		"title": "Mikhmon V4",
 		"order": 40,
 		"action": {
