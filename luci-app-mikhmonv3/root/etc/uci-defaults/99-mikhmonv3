@@ -22,4 +22,4 @@ opkg install ${PHPVER}-cli ${PHPVER}-mod-xml ${PHPVER}-mod-filter ${PHPVER}-mod-
 
 [ -e /www/mikhmonv3 ] && rm -rf /www/mikhmonv3
 ln -s /usr/share/mikhmonv3 /www/mikhmonv3
-echo "✅ Mikhmon v3 siap diakses di /www/mikhmonv3"
+echo "✅ Mikhmon v3 siap diakses di Services mikhmonv3"
