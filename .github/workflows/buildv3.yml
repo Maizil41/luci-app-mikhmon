@@ -51,21 +51,21 @@ jobs:
         run: |
           echo -e "\033[34m🔍 Updating SDK feeds \033[0m"
           cd sdk
-          ./scripts/feeds update -a > /dev/null 2>&1
+          ./scripts/feeds update -a
 
           echo -e "\033[34m🔗 Installing SDK feeds \033[0m"
-          ./scripts/feeds install -a > /dev/null 2>&1
+          ./scripts/feeds install -a
 
       - name: ⚙️ Configure & compile IPK
         run: |
           echo -e "\033[34m🔧 Configuring SDK \033[0m"
-          cd sdk && make defconfig > /dev/null 2>&1
+          cd sdk && make defconfig
           rm -rf feeds/luci/contrib/package/csstidy
           sed -i '/^CONFIG_LUCI_JSMIN=/d' .config
           sed -i '/^CONFIG_LUCI_CSSTIDY=/d' .config
 
           echo -e "\033[34m🔨 Compiling ${PKG_NAME} package \033[0m"
-          make package/${PKG_NAME}/{clean,compile} -j$(nproc) V=s > /dev/null 2>&1
+          make package/${PKG_NAME}/{clean,compile} -j$(nproc) V=s
 
           echo -e "\033[34m📦 Compilation completed: \033[0m"
           PKG_PATH=$(find bin/packages/x86_64/luci/ -name 'luci-app-*.ipk')
