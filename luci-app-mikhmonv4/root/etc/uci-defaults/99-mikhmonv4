@@ -17,8 +17,7 @@ fi
 
 echo "✅ PHP terdeteksi: $PHPVER"
 
-opkg update
-opkg install ${PHPVER}-cli ${PHPVER}-mod-xml ${PHPVER}-mod-filter ${PHPVER}-mod-curl
+opkg install ${PHPVER}-cli ${PHPVER}-mod-xml ${PHPVER}-mod-filter ${PHPVER}-mod-curl >/dev/null 2>&1
 
 [ -e /www/mikhmonv4 ] && rm -rf /www/mikhmonv4
 ln -s /usr/share/mikhmonv4 /www/mikhmonv4
