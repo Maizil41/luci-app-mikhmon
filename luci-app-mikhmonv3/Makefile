@@ -1,4 +1,6 @@
-# SPDX-License-Identifier: Apache-2.0
+# This is free software, licensed under the Apache License, Version 2.0
+#
+# Copyright (C) 2025 Maizil <https://github.com/maizil41>
 
 include $(TOPDIR)/rules.mk
 
