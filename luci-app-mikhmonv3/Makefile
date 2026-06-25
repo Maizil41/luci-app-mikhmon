@@ -5,7 +5,7 @@
 include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=LuCI support for Mikhmon.
-LUCI_DEPENDS:=+luci
+LUCI_DEPENDS:=+luci +php-cli +php-mod-xml +php-mod-filter +php-mod-curl
 LUCI_DESCRIPTION:=This package contains LuCI configuration pages for Mikhmon.
 LUCI_MAINTAINER:=Maizil41 <https://github.com/maizil41>
 
