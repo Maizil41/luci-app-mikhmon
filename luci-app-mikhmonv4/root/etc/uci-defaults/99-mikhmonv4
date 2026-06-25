@@ -1,17 +1,43 @@
 #!/bin/sh
 
+# Deteksi package manager
+if command -v opkg >/dev/null 2>&1; then
+    PKG="opkg"
+elif command -v apk >/dev/null 2>&1; then
+    PKG="apk"
+else
+    echo "❌ Package manager tidak didukung"
+    exit 1
+fi
+
+# Cari versi PHP yang tersedia
 for v in php8 php7 php; do
-    if opkg list-installed | grep -q "^${v}-cli "; then
-        PHPVER="$v"
-        break
+    if [ "$PKG" = "opkg" ]; then
+        if opkg list-installed | grep -q "^${v}-cli "; then
+            PHPVER="$v"
+            break
+        fi
+    else
+        if apk info -e "${v}" >/dev/null 2>&1; then
+            PHPVER="$v"
+            break
+        fi
     fi
 done
 
+# Jika belum terinstall, cek repository
 if [ -z "$PHPVER" ]; then
     for v in php8 php7 php; do
-        if opkg list | grep -q "^${v}-cli "; then
-            PHPVER="$v"
-            break
+        if [ "$PKG" = "opkg" ]; then
+            if opkg list | grep -q "^${v}-cli "; then
+                PHPVER="$v"
+                break
+            fi
+        else
+            if apk search "${v}" 2>/dev/null | grep -q "^${v}$"; then
+                PHPVER="$v"
+                break
+            fi
         fi
     done
 fi
@@ -23,13 +49,20 @@ fi
 
 echo "✅ Menggunakan $PHPVER"
 
-opkg install \
-    ${PHPVER}-cli \
-    ${PHPVER}-mod-xml \
-    ${PHPVER}-mod-filter \
-    ${PHPVER}-mod-curl
+if [ "$PKG" = "opkg" ]; then
+    opkg install \
+        ${PHPVER}-cli \
+        ${PHPVER}-mod-xml \
+        ${PHPVER}-mod-filter \
+        ${PHPVER}-mod-curl
+else
+    apk add \
+        ${PHPVER} \
+        ${PHPVER}-xml \
+        ${PHPVER}-curl
+fi
 
-[ -L /www/mikhmonv3 ] || [ -e /www/mikhmonv3 ] && rm -rf /www/mikhmonv3
+rm -rf /www/mikhmonv3
 ln -sf /usr/share/mikhmonv3 /www/mikhmonv3
 
 echo "✅ Mikhmon v3 siap diakses di Services → Mikhmon v3"
