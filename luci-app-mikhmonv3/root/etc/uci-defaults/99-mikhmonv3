@@ -34,7 +34,7 @@ if [ -z "$PHPVER" ]; then
                 break
             fi
         else
-            if apk search "${v}" 2>/dev/null | grep -q "^${v}$"; then
+            if apk search "${v}-cli" 2>/dev/null | grep -q "^${v}-cli-"; then
                 PHPVER="$v"
                 break
             fi
