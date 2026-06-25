@@ -1,6 +1,52 @@
 #!/bin/sh
 
-rm -rf /www/mikhmonv3
-ln -sf /usr/share/mikhmonv3 /www/mikhmonv3
+(
+    sleep 5
 
-echo "✅ Mikhmon v3 siap diakses di Services → Mikhmon v3"
+    PHPVER=""
+
+    if command -v apk >/dev/null 2>&1; then
+        for v in php8 php7 php; do
+            if apk search "${v}-cli" 2>/dev/null | grep -q "^${v}-cli-"; then
+                PHPVER="$v"
+                break
+            fi
+        done
+
+        if [ -n "$PHPVER" ]; then
+            echo "Menginstall dependency PHP ($PHPVER)..."
+            apk add \
+                ${PHPVER}-cli \
+                ${PHPVER}-mod-xml \
+                ${PHPVER}-mod-filter \
+                ${PHPVER}-mod-curl
+        else
+            echo "PHP tidak ditemukan di repository."
+        fi
+
+    elif command -v opkg >/dev/null 2>&1; then
+        for v in php8 php7 php; do
+            if opkg list | grep -q "^${v}-cli "; then
+                PHPVER="$v"
+                break
+            fi
+        done
+
+        if [ -n "$PHPVER" ]; then
+            echo "Menginstall dependency PHP ($PHPVER)..."
+            opkg install \
+                ${PHPVER}-cli \
+                ${PHPVER}-mod-xml \
+                ${PHPVER}-mod-filter \
+                ${PHPVER}-mod-curl
+        else
+            echo "PHP tidak ditemukan di repository."
+        fi
+    fi
+
+    rm -rf /www/mikhmonv3
+    ln -sf /usr/share/mikhmonv3 /www/mikhmonv3
+
+) >/tmp/mikhmon-postinst.log 2>&1 &
+
+exit 0
