@@ -1,24 +1,35 @@
 #!/bin/sh
 
-if command -v php &>/dev/null; then
-    PHPVER=$(php -v | grep -oE '^PHP [0-9]+' | awk '{print "php" $2}')
-elif command -v php8 &>/dev/null; then
-    PHPVER="php8"
-elif command -v php7 &>/dev/null; then
-    PHPVER="php7"
-else
-    PHPVER=$(opkg list-installed | grep -oE '^php[0-9]' | head -n1)
+for v in php8 php7 php; do
+    if opkg list-installed | grep -q "^${v}-cli "; then
+        PHPVER="$v"
+        break
+    fi
+done
+
+if [ -z "$PHPVER" ]; then
+    for v in php8 php7 php; do
+        if opkg list | grep -q "^${v}-cli "; then
+            PHPVER="$v"
+            break
+        fi
+    done
 fi
 
 if [ -z "$PHPVER" ]; then
-    echo "❌ Tidak dapat mendeteksi PHP. Pastikan php7 atau php8 sudah diinstal."
+    echo "❌ Paket PHP tidak tersedia di repository."
     exit 1
 fi
 
-echo "✅ PHP terdeteksi: $PHPVER"
+echo "✅ Menggunakan $PHPVER"
 
-opkg install ${PHPVER}-cli ${PHPVER}-mod-xml ${PHPVER}-mod-filter ${PHPVER}-mod-curl >/dev/null 2>&1
+opkg install \
+    ${PHPVER}-cli \
+    ${PHPVER}-mod-xml \
+    ${PHPVER}-mod-filter \
+    ${PHPVER}-mod-curl
 
-[ -e /www/mikhmonv4 ] && rm -rf /www/mikhmonv4
-ln -s /usr/share/mikhmonv4 /www/mikhmonv4
-echo "✅ Mikhmon v4 siap diakses di Services mikhmonv4"
+[ -L /www/mikhmonv3 ] || [ -e /www/mikhmonv3 ] && rm -rf /www/mikhmonv3
+ln -sf /usr/share/mikhmonv3 /www/mikhmonv3
+
+echo "✅ Mikhmon v3 siap diakses di Services → Mikhmon v3"
