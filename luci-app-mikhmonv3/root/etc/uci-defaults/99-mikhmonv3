@@ -17,6 +17,7 @@
             echo "Menginstall dependency PHP ($PHPVER)..."
             apk add \
                 ${PHPVER}-cli \
+                ${PHPVER}-cgi \
                 ${PHPVER}-mod-xml \
                 ${PHPVER}-mod-filter \
                 ${PHPVER}-mod-curl
@@ -36,6 +37,7 @@
             echo "Menginstall dependency PHP ($PHPVER)..."
             opkg install \
                 ${PHPVER}-cli \
+                ${PHPVER}-cgi \
                 ${PHPVER}-mod-xml \
                 ${PHPVER}-mod-filter \
                 ${PHPVER}-mod-curl
