@@ -62,7 +62,7 @@ else
         ${PHPVER}-curl
 fi
 
-rm -rf /www/mikhmonv3
-ln -sf /usr/share/mikhmonv3 /www/mikhmonv3
+rm -rf /www/mikhmonv4
+ln -sf /usr/share/mikhmonv4 /www/mikhmonv4
 
-echo "✅ Mikhmon v3 siap diakses di Services → Mikhmon v3"
+echo "✅ Mikhmon v4 siap diakses di Services → Mikhmon v4"
